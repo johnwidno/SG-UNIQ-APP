@@ -12,16 +12,25 @@
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
       <ul class="navbar-nav mr-lg-4 w-100">
         <li class="nav-item nav-search d-none d-lg-block w-100">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="search">
-                <i class="mdi mdi-magnify"></i>
-              </span>
-            </div>
-            <input type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
-          </div>
+
+
+                <form action="{{ url('admin/diplome/recherche/search') }}" method="GET">
+
+
+                    <span class="input-group input-group-text" id="search">
+                       <button type="submit" class="border-0"> <i class="mdi mdi-magnify btn"></i></button>
+                        <input name="search" type="text"  class="form-control" placeholder="saisir le code l'etudiant...">
+
+                      </span>
+                      </form>
+
         </li>
       </ul>
+
+
+
+
+          </span>
 
 
 

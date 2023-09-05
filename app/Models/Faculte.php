@@ -16,4 +16,13 @@ class Faculte extends Model
         'nom',
         ];
 
+public function etudiants(){
+    $this->hasMany(Etudiant::class,'codeEtudiant');
 }
+
+public function Programmes(){
+    $this->hasMany(Programme::class,'codeFaculte');
+}
+
+
+    }

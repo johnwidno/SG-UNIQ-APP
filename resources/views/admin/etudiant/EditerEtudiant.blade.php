@@ -28,16 +28,14 @@
             </div>
 
             <div class="col-md-6 nb-3">
-                <label name="faculte" for="faculte">Faculté</label>
-                <select  class="form-control ">
+                <label  for="">Faculté</label>
+                <select name="faculte" class="form-control ">
                   <option value="FSGA">FSGA</option>
-                  <option value="FSSA">FSSA</option>
-                  <option value="FSED">FSED</option>
-                  <option value="FSJP">FSJP</option>
-                  <option value="FSAE">FSAE</option>
-                  <option value="FSEA">FSEA</option>
-                </selecT>
 
+                </selecT>
+                @error('faculte')
+                <div class="error  text-danger">{{ $message }}</div>
+            @enderror
             </div>
 
             <div class="col-md-6 nb-3">

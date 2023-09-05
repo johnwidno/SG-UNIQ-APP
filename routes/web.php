@@ -32,21 +32,12 @@ Route::controller(App\Http\Controllers\Admin\EtudiantController::class)->group(f
     Route::get('/etudiant', 'index');
     Route::get('/etudiant/nouveauEtudiant', 'nouveauEtudiant');
     Route::post('/etudiant', 'insertEtudiant');
-    Route::get('/etudiant/{etudiant}/edit', 'editer');
-    Route::put('/etudiant/{etudiant}/edit', 'UpdateEtudiant');
+     Route::get('/etudiant/{etudiant}/edit', 'editer');
+    Route::put('/etudiant/{etudiant}', 'UpdateEtudiant');
     Route::get('/etudiant/{etudiant}/delete', 'deleteEtudiant');
-
+    Route::get('/etudiant/search', 'rechercheUnEtudiant');
 });
-/*
-// etudiants route
-Route::get('etudiant', [App\Http\Controllers\Admin\EtudiantController::class, 'index']);
-Route::get('etudiant/nouveauEtudiant', [App\Http\Controllers\Admin\EtudiantController::class, 'nouveauEtudiant']);
-Route::post('etudiant', [App\Http\Controllers\Admin\EtudiantController::class, 'insertEtudiant']);
-Route::get('etudiant/{etudiant}/edit', [App\Http\Controllers\Admin\EtudiantController::class, 'editer']);
-Route::put('etudiant/{etudiant}', [App\Http\Controllers\Admin\EtudiantController::class, 'UpdateEtudiant']);
-//Route::get('etudiant/{etudiant}/delete', [App\Http\Controllers\Admin\EtudiantController::class, 'deleteEtudiant']);
 
-*/
 
 Route::get('/facultes',  [App\Http\Controllers\Admin\FaculterController::class,'index']);
 Route::post('/facultes',  [App\Http\Controllers\Admin\FaculterController::class,'Ajouterfaculter']);
@@ -81,6 +72,12 @@ Route::controller(App\Http\Controllers\Admin\DiplomeController::class)->group(fu
     Route::post('/diplome', 'effectuerremisefunction');
     Route::get('/diplome/{diplome}/{etudiant}/edit', 'editerpagefunction');
     Route::get('/diplome/{diplome}', 'updateremise');
+    Route::get('/diplome/remise/search', 'rechercheUnEtudiant');
+    Route::get('/diplome/recherche/search', 'EtudiantWithallinfos');
+    Route::get('/diplome/remise/livre', 'diplomeparusers');
+
+
+
     //Route::put('/diplome/{diplome}/delete', 'deletRemise');
    // Route::put('/diplome/{diplome}/select', 'selectall');
 

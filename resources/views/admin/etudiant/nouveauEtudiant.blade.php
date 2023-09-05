@@ -6,13 +6,13 @@
 <div class="card">
 <div class="card-header">
 
-<h5>Nouveau Etudiants
+<h5>Nouveau etudiants
 
     <a href="{{ url('admin/etudiant') }}" class="btn  float-end bg-danger text-white">Retour</a>
 </h5>
 @if(session('message'))
 <br>
-<small><div class="alert alert-succes text-white bg-danger">{{ session('message')  }} </div></small>
+<small><div id="displayindeuxseconde" class="alert alert-succes text-white bg-danger">{{ session('message')  }} </div></small>
 @endif
 </div>
 
@@ -31,29 +31,27 @@
             </div>
 
             <div class="col-md-6 nb-3">
-                <label name="faculte" for="faculte">Faculté</label>
+                <label name="" for="faculte">Faculté</label>
 
-                <select name="codeFaculte" class="form-control ">
-                    @foreach ($facultes as $faculte)
+                <select name="faculte" class="form-control ">
                     <option value=""></option>
+                    @foreach ($facultes as $faculte)
                     <option value="{{ $faculte->codeFaculte}}">{{ $faculte->codeFaculte }}</option>
-                    
                     @endforeach
                 </selecT>
-                @error('codeFaculte')
+                @error('faculte')
                 <div class="error  text-danger">{{ $message }}</div>
              @enderror
 
             </div>
 
             <div class="col-md-12 nb-3">
-                <label name="" for="faculte">OPtion</label>
+                <label for="">OPtion</label>
 
                 <select name="option" class="form-select" >
                     <option selected> Selectionner un programme ici..</option>
-                    @foreach ($programmes as $programme)              
-                   
-                    <option value="{{ $programme->codeProgramme}}">{{ $programme->option }}</option>                    
+                    @foreach ($programmes as $programme)
+                    <option value="{{ $programme->codeProgramme}}">{{ $programme->option }}</option>
                     @endforeach
                 </selecT>
                 @error('option')
@@ -84,7 +82,7 @@
             <div class="col-md-12 nb-3">
                 <label for="sexe">Sexe:</label>
                 <select name="sexe" class="form-select">
-                    <option selected>selectionner un genre</option>
+                    <option selected></option>
                     <option value="homme">Homme</option>
                     <option value="femme">Femme</option>
                 </select>

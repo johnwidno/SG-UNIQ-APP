@@ -32,14 +32,26 @@
 
   <br>
 
+
+
   @if(session('message'))
     <small>
-       <div class="alert alert-succes text-white bg-success">{{ session('message')  }}
+       <div id="displayindeuxseconde" class="alert alert-succes text-white bg-success">{{ session('message')  }}
         <a href="" class="float-end text-white">refresh</a>
     </div>
 
     </small>
 @endif
+
+  @if(session('messagenotrouve'))
+    <small>
+       <div id="displayindeuxseconde" class="alert alert-succes text-white bg-danger">{{ session('messagenotrouve')  }}
+        <a href="" class="float-end text-white">refresh</a>
+    </div>
+
+    </small>
+@endif
+
 <div class="row">
     <div class="col-md-2">
 
@@ -48,17 +60,21 @@
     </div>
     <div class="col-md-8">
         <div>
+            <form action="{{ url('admin/etudiant/search') }}" method="GET">
+
+
             <span class="input-group-text" id="search">
-                <i class="mdi mdi-magnify btn"></i>
-                <input wire:model="searchQuery" type="text"  class="form-control" placeholder="saisir le code l'etudiant...">
+               <button type="submit" class="border-0"> <i class="mdi mdi-magnify btn"></i></button>
+                <input name="search" type="text"  class="form-control" placeholder="saisir le code l'etudiant...">
 
               </span>
+              </form>
        </div>
 
     </div>
 
     <div class="col-md-2">
-        <a href="{{ url('admin/etudiant/nouveauEtudiant') }}" class="btn btn-primary float-end ">Add Etudiant</a>
+        <a href="{{ url('admin/etudiant/nouveauEtudiant') }}" class="btn btn-primary float-end ">Add etudiant</a>
 
     </div>
 <br>
@@ -69,8 +85,8 @@
 
 <div class="card-body">
 
-
-<table class="table table-hover table-striped">
+    <div class="card"  wire:scroll="loadMore">
+<table class="table table-border  table-hover table-striped ">
 
   <thead>
 
@@ -87,11 +103,12 @@
 
 <tbody>
  @foreach ($etudiants as $etudiant)
-    <tr class="table-active">
+    <tr class="">
         <td> {{ $etudiant->codeEtudiant }}</td>
         <td> {{ $etudiant->nom }}</td>
         <td> {{ $etudiant->prenom }}</td>
         <td> {{ $etudiant->sexe }}</td>
+
         <td>
             <a class="btn   bg-success" href="{{ url('admin/etudiant/'.$etudiant->codeEtudiant.'/edit') }}" >
                 <i class=" bg-success mdi mdi-pencil-circle text-white"></i>
@@ -110,6 +127,7 @@
 @endforeach
 </tbody>
 </table>
+</div>
 
 <div class="row">
     <div class="col-md-9">
@@ -131,4 +149,6 @@
 
 
 </div>
+
+
 

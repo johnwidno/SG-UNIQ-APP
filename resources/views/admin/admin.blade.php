@@ -42,8 +42,6 @@
 
         <div class="main-panel">
 
-
-
             <div class="content-wrapper">
 
 
@@ -53,7 +51,7 @@
             </div>
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                  <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.uniq.edu" target="_blank">SG-uniq</a>2023</span>
+                  <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.uniq.edu" id="copyright-year"  target="_blank" ></a></span>
                   <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">all right reserved</span>
                 </div>
                 </footer>
@@ -69,11 +67,13 @@
 
 
     <script src="{{ asset('adminboostrap/vendors/base/vendor.bundle.base.js') }}"></script>
+
     <!-- endinject -->
     <!-- Plugin js for this page-->
     <script src="{{asset('adminboostrap/vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{asset('adminboostrap/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
     <!-- End plugin js for this page-->
+
     <!-- inject:js -->
     <script src="{{asset('adminboostrap/js/off-canvas.js')}}"></script>
     <script src="{{asset('adminboostrapjs/hoverable-collapse.js')}}"></script>
@@ -92,7 +92,11 @@
 
     <script src="{{ asset('assets/js/jquery-3.7.0.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="/assets/jstime.js"></script>
+
+
 
     @livewireScripts
+
 </body>
 </html>

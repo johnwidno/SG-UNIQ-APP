@@ -21,6 +21,8 @@ class DiplomeFormRequest extends FormRequest
      */
     public function rules(): array
     {
+
+
         return [
             'codeEtudiant' => 'required|string|max:12',
             //'fichier' => 'required|file|mimes:pdf',
@@ -33,8 +35,8 @@ class DiplomeFormRequest extends FormRequest
             'sexe' => 'required|string',
             'option' => 'required|string',
             'faculte' => 'required|string',
-            //'status' => 'required|integer',
-
+            'etat' => 'required|integer',
+            'receveur' => 'required|String',
             'user_id' => 'required|integer',
         ];
 

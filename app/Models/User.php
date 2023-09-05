@@ -45,8 +45,10 @@ class User extends Authenticatable
     ];
 
 
-    public function diplome(){
-        return $this->hasMany(Diplome::class,'user_id','id');
+
+    public function diplomes()
+    {
+        return $this->hasMany(Diplome::class);
     }
 
 

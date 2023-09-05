@@ -1,4 +1,7 @@
   <!-- partial:partials/_sidebar.html -->
+
+  @include('admin.diplome.RechercherEtudiant')
+
   <nav class="sidebar sidebar-offcanvas " id="sidebar">
     <ul class="nav">
       <li class="nav-item">
@@ -16,7 +19,7 @@
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{ url('admin/diplome') }}">board diplomes</a></li>
-            <li class="nav-item"> <a class="nav-link" href="{{ url('admin/diplome/remise') }}">remise</a></li>
+            <li class="nav-item"> <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#Rechechermodel" > remise</a></li>
           </ul>
         </div>
       </li>
@@ -84,3 +87,6 @@
       </li>
     </ul>
   </nav>
+
+
+

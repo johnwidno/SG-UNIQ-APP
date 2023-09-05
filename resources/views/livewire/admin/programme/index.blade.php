@@ -29,7 +29,7 @@
                 <div class="card-header">
                     @if(session('message'))
                         <br>
-                        <small><div class="alert alert-succes text-white bg-danger">{{ session('message')  }}
+                        <small><div id="displayindeuxseconde" class="alert alert-succes text-white bg-danger">{{ session('message')  }}
                             <a href="" class="float-end text-white">refresh</a>
                         </div></small>
 

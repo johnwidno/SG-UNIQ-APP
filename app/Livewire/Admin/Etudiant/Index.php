@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Etudiant;
 
 use App\Models\Etudiant;
+use App\Models\EtudiantFaculte;
 use App\Models\Faculte;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -27,7 +28,7 @@ class Index extends Component
     public function destroyEtudiant()
     {
         $etudiant = Etudiant::where('codeEtudiant', $this->codeEtudiantToDelete)->first();
-        //$etudiant = Etudiant::find($this->codeEtudiantToDelete);
+      
         if ($etudiant) {
             $etudiant->delete();
             return  redirect('admin/etudiant')->with('message',"Etudiant suprimé.");
@@ -48,10 +49,19 @@ class Index extends Component
 
     public function render()
     {
-        $etudiants = Etudiant::orderBy('nom','ASC')->paginate(5);
-        return view('livewire.admin.etudiant.index',['etudiants'=> $etudiants]);
-
+        $etudiants = Etudiant::orderBy('created_at','desc')->paginate(5);
+       return view('livewire.admin.etudiant.index',['etudiants'=> $etudiants]);
+     
     }
 public $facultescode ;
 
+public $page = 1;
+public function loadMore()
+{
+    $this->page++;
 }
+
+}
+
+
+

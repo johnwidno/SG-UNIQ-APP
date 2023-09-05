@@ -14,7 +14,7 @@
                 <div class="card-header">
                     @if(session('message'))
                         <br>
-                        <small><div class="alert alert-succes text-white bg-danger">{{ session('message')  }}
+                        <small><div id="displayindeuxseconde" class="alert alert-succes text-white bg-danger">{{ session('message')  }}
                             <a href="" class="float-end text-white">refresh</a>
                         </div></small>
 
@@ -30,14 +30,13 @@
 
 <br><hr>
                 <div class="card-body">
-                    <table class="table table-border table-striped">
+                    <table class="table table-hover table-striped">
                         <thead>
-                            <tr>
-                                <th>Code Faculte</th>
+                            <tr >
+                                <th >Code Faculte</th>
                                 <th>Nom Faculte</th>
                                 <th>Editer</th>
                                 <th>Supprimer</th>
-
                             </tr>
                         </thead>
 

@@ -17,12 +17,20 @@ class Diplome extends Model
         'DateEmission',
         'NumeroEnrUniq',
         'CodeMNFP',
-        'status',
+        'etat',
+        'receveur',
         'description',
         'user_id',
 
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
- 
+    public function etudiant(){
+        return $this->belongsTo(Etudiant::class);
+    }
+
 
 }

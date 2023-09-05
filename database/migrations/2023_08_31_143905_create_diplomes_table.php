@@ -19,7 +19,8 @@ return new class extends Migration
             $table->date('DateEmission')->nullable();
             $table->string('NumeroEnrUniq');
             $table->string('CodeMNFP');
-            $table->tinyInteger('status')->default('0')->comment('1="remis , non-remis');;
+            $table->tinyInteger('etat')->default('0')->comment('1="remis , non-remis');;
+            $table->string('Receveur');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -38,7 +39,7 @@ return new class extends Migration
         Schema::create('diplomes', function (Blueprint $table) {
             $table->dropForeign("codeEtudiant");
             $table->dropForeign("user_id");
-            
+
 
         });
         Schema::dropIfExists('diplomes');

@@ -20,5 +20,11 @@ class Etudiant extends Model
     ];
 
 
+   public  function diplomes(){
+    return $this->hasMany(Diplome::class, 'codeEtudiant');
+   }
+  
+
+
 
 }

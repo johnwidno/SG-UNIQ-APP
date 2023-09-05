@@ -17,4 +17,8 @@ class Programme extends Model
         'option'
         ];
 
+        public function Faculte(){
+            $this->belongsTo(Faculte::class,);
+        }
+
 }
