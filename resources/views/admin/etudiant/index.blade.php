@@ -5,4 +5,5 @@
     <livewire:admin.etudiant.index />
 </div>
 
+
 @endsection

@@ -26,7 +26,7 @@
 
             @if(session('message'))
             <br>
-            <small><div class="alert alert-succes text-white bg-danger">{{ session('message')  }} </div></small>
+           <h6><div id="displayindeuxseconde" class="alert alert-succes text-white bg-danger">{{ session('message')  }} </div></h6>
             @endif
             </div>
 
@@ -77,15 +77,18 @@
                     @enderror
                     </div>
 
-                    <div class="col-md-12">
-                        <h6>Faculté et option</h6>
+                    <div class="col-md-12 pt-2">
+                        <h6>Faculté (s) et option (s) </h6>
                     </div>
 
                     <div class="col-md-3 nb-3">
                         <label for="">Faculte</label>
 
-                        <select name="faculte" class="form-select ">
-                            <option value="" selected></option>
+                       <select name="faculte" class="form-select ">
+                        @foreach ($etudiant->Programmes as $programme)
+                        <option selected>{{ $programme->codeFaculte }}</option>
+                        @endforeach
+
                             @foreach ($facultes as $faculte)
                             <option value="{{ $faculte->codeFaculte}}">{{ $faculte->codeFaculte }}</option>
                             @endforeach
@@ -101,58 +104,59 @@
 
 
 
-                    <div class="col-md-7 nb-3">
-                        <label  for="">OPtion</label>
+                    <div class="col-md-6 nb-3">
+                        <label  for="">Option</label>
                         <select name="option" class="form-select">
-                            <option selected></option>
-                            @foreach ($programmes as $programme)
+                            @foreach ($etudiant->programmes as $programme)
+                            <option value="{{ $programme->codeProgramme}}" selected> {{ $programme->option }}- {{ $programme->nomProgramme }} - {{ $programme->codeFaculte }}</option>
+                            @endforeach
 
-                            <option value="{{ $programme->codeProgramme}}">{{ $programme->option }}</option>
+                            @foreach ($programmes as $programme)
+                            <option value="{{ $programme->codeProgramme}}"> {{ $programme->option }}</option>
                             @endforeach
                         </selecT>
                         @error('option')
                         <div class="error  text-danger">{{ $message }}</div>
                     @enderror
-                    <br>
+
                     </div>
 
-                    <div class="col-md-2 nb-3">
+                    <div class="col-md-3 nb-3 ">
                         <label for="">Regime</label>
+                        <select name="regime" class="form-select" >
+                            @foreach ($etudiant->programmes as $programme)
+                            <option value="{{  $programme->pivot->regime  }}" selected>{{  $programme->pivot->regime  }}</option>
+                             @endforeach
 
-                        <select name="regime" class="form-select ">
-                            <option selected></option>
-                            @foreach ($facultes as $faculte)
+                            <option value="Temps Plein">Temps Plein</option>
+                            <option value="Temps Libre<">Temps Libre</option>
+                            </selecT>
 
-                            <option value="{{ $faculte->codeFaculte}}">TPL</option>
-                            @endforeach
-                        </selecT>
-                        @error('faculte')
+                        @error('regime')
                         <div class="error  text-danger">{{ $message }}</div>
                     @enderror
-
                     </div>
 
 
 
-                    <h6>A PROPOS DU DIPLOME </h6>
+                    <h6 class="pt-3">A PROPOS DU DIPLOME </h6>
                     <hr>
-                    <div class="col-md-4 nb-3">
-                            <label for="sexe">Categorie</label>
-                            <select name="categorie" class="form-select enable">
-                                <option value=""></option>
-                                <option value="Certificat">Certificat</option>
-                                <option value="Diplome">Diplome</option>
-                                <option value="Liscence">Liscence</option>
-                                <option value="Maitrise">Maitrise</option>
-                                <option value="Attestation">Attestation</option>
 
-                            </selecT>
-                            @error('categorie')
-                            <div class="error  text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <div class="col-md-3 nb-3 pt-2">
+                        <label for="categorie">Type</label>
+                        <select name="categorie_id" id="categorie_id" class="form-select enable">
+                            <option value=""></option>
+                          @foreach($categories as $categorie)
+                          <option value="{{$categorie->id }}">{{ $categorie->nomCategorie }}</option>
+                          @endforeach
+                        </select>
+                        @error('categorie_id')
+                        <div class="error text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                    <div class="col-md-4 nb-3">
+
+                    <div class="col-md-5 nb-3 pt-2">
                             <label for="sexe">No Enreistrement a l'uniq:</label>
                             <input type="text" name= 'NumeroEnrUniq' class="form-control">
                             @error('NumeroEnrUniq')
@@ -160,49 +164,65 @@
                             @enderror
                         </div>
 
-                    <div class="col-md-4 nb-3">
-                            <label for="sexe">Code du Ministere MNFP</label>
+                    <div class="col-md-4 nb-3 pt-2">
+                            <label for="sexe">Code du ministère MNFP</label>
                             <input type="text" name= 'mnfpCode' class="form-control">
                             @error('mnfpCode')
                             <div class="error  text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    <div class="col-md-4 nb-3">
-                            <label for="sexe">Importer le scanner fichier (pdf)</label>
-                            <input type="file" name='fichier' multiple class="form-control" required >
-                            @error('fichier')
-                            <div class="error  text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    <div class="col-md-4 nb-3">
-                            <label for="sexe">DateEmission</label>
+
+                    <div class="col-md-3 nb-3 pt-3">
+                            <label for="sexe">Date Emission</label>
                             <input type="date" name= 'DateEmission' class="form-control">
                             @error('DateEmission')
                             <div class="error  text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    <div class="col-md-4 nb-3">
-                            <label for="sexe">receveur </label>
-                            <input type="text" name= 'receveur' class="form-control">
-                            @error('receveur')
+
+                        <div class="col-md-9 nb-3 pt-3">
+                            <label for="fichier">Importer le fichier (pdf)</label>
+                            <input id="fichier" type="file"  maxlength="5000000" name='fichier' multiple class="form-control" accept=".pdf" required >
+                            @error('fichier')
                             <div class="error  text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-3 nb-3">
+
+
+                        <div class="col-md-3 nb-3 pt-3">
+
                             <label for="">Etat</label>
-                            <select name="etat" class="form-select" >
+                               <select name="etat" class="form-select" >
                                 <option value=""></option>
-                                <option value="1">Livré</option>
-                                <option value="0">Non-livré</option>
-                                <option value="2">En cour de traitement</option>
-                                <option value="3">a traite</option>
-                            </selecT>
+                                <option value="Livré">Livré</option>
+                                <option value="non-livré">Non-livré</option>
+                                </selecT>
                             @error('etat')
                             <div class="error  text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
-                    <div class="col-md-8 nb-3">    <br>
+
+
+                    <div class="col-md-5 nb-3 pt-3">
+                        <label for="sexe">receveur </label>
+                        <input type="text" name= 'receveur' class="form-control">
+                        @error('receveur')
+                        <div class="error  text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-4 nb-2 pt-3">
+                            <label for="sexe">Date Livraison</label>
+                            <input type="date" name= 'DateLivraison' class="form-control">
+                            @error('DateEmission')
+                            <div class="error  text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+
+
+                        <div class="col-md-12 nb-6">    <br>
                             <textarea class="form-control" name="description" placeholder="Ajouter une description ici. ( Optionnel ) "  style="height: 50px"></textarea>
                             @error('desc')
                             <div class="error  text-danger">{{ $message }}</div>

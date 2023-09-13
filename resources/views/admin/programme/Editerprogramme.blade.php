@@ -6,7 +6,7 @@
 <div class="card">
 <div class="card-header">
 
-<h5>Ajouter Un programme
+<h5>Editer programme
 
     <a href="{{ url('admin/programme') }}" class="btn  float-end bg-danger text-white">Retour</a>
 </h5>
@@ -18,14 +18,14 @@
 
 <div class="card-body">
 
-    <form  action="{{ url('admin/programme/'.$programme->codeProgramme )  }}" method="POST" enctype="multipart/form-data">
+    <form  action="{{ url('admin/programme/'.$programme->codeProgramme) }}" method="POST" enctype="multipart/form-data">
 
         @csrf
         @method('PUT')
         <div class="row">
             <div class="col-md-12 nb-3">
                 <label for="">Code Programme</label>
-                <input type="text" value="{{ $programme->codeProgramme }}" name='codeProgramme' class="form-control">
+                <input type="text" value="{{ $programme->codeProgramme }}" name='codeProgramme' class="form-control" readonly>
 
                 @error('codeProgramme')
                 <div class="error  text-danger">{{ $message }}</div>
@@ -50,13 +50,25 @@
                 <div class="error  text-danger">{{ $message }}</div>
             @enderror
             </div>
+            <div class="col-md-12 nb-3">
+                <label name="" for="faculte">Faculté</label>
+                <select name="faculte" class="form-control ">
+                    <option value="{{ $programme->codeFaculte }}">{{ $programme->codeFaculte }}</option>
+                    @foreach ($facultes as $faculte)
+                    <option value="{{ $faculte->codeFaculte}}">{{ $faculte->codeFaculte }}</option>
+                    @endforeach
+                </selecT>
+                @error('faculte')
+                <div class="error  text-danger">{{ $message }}</div>
+                @enderror
 
+            </div>
 
 
 
                <div class="col-md-12 nb-3">
                 <hr>
-               <button type="submit" class="btn btn-primary  float-none"> save </button>
+               <button type="submit" class="btn btn-primary  float-none"> Mise a jour </button>
             </div>
         </div>
 

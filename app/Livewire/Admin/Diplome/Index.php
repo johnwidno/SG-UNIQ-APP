@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin\Diplome;
 
 use App\Models\Diplome;
+use App\Models\Etudiant;
+use App\Models\Etudiant_Programme;
 use App\Models\Faculte;
 use App\Models\Programme;
 use Illuminate\Support\Facades\File;
@@ -18,11 +20,11 @@ class Index extends Component
     public function render()
     {
 
-    $diplomes = Diplome::orderBy('id','ASC')->paginate(7);
+    $etudiants = Etudiant::with('diplomes','programmes')->orderBy('codeEtudiant','ASC')->paginate(7);
     $facultes= Faculte::all('*');
     $programmes= Programme::all('*');
 
-      return view('livewire.admin.diplome.index',compact('diplomes','facultes','programmes'));
+      return view('livewire.admin.diplome.index',compact('etudiants','facultes','programmes'));
     }
 
     public $iddiplome;
@@ -36,18 +38,21 @@ class Index extends Component
     public function  destroyDiplomeremis()
     {
         $diplome = Diplome::where('id', $this->iddiplome)->first();
+        $etudiant_Programme = Etudiant_Programme::where('codeProgramme', $diplome->codeProgramme )->first();
 
          $path='uploads/diplome/'.$diplome->cheminVerfichier;
 
 
             try {
 
-
+                $diplome->delete();
                 if(File::exists($path)){
 
                     if ($diplome) {
 
                         $diplome->delete();
+                        $etudiant_Programme->delete();
+
                         File::delete($path);
                         return  redirect('admin/diplome')->with('message',"remise suprimé.");
                     }else{
@@ -70,7 +75,7 @@ class Index extends Component
 
 
 
-  
+
 
     public function mount()
     {

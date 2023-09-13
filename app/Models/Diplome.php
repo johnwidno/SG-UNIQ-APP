@@ -13,12 +13,14 @@ class Diplome extends Model
     protected $fillable=[
         'codeEtudiant',
         'cheminVerfichier',
-        'categorie',
+        'categorie_id',
         'DateEmission',
+        'DateLivraison',
         'NumeroEnrUniq',
         'CodeMNFP',
         'etat',
-        'receveur',
+        'codeProgramme',
+        'Receveur',
         'description',
         'user_id',
 
@@ -31,6 +33,18 @@ class Diplome extends Model
     public function etudiant(){
         return $this->belongsTo(Etudiant::class);
     }
+
+
+    public function programme()
+    {
+        return $this->belongsTo(Programme::class,'codeProgramme');
+    }
+
+
+    public function categorie()
+{
+    return $this->belongsTo(Categorie::class, 'categorie_id');
+}
 
 
 }

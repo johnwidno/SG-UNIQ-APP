@@ -29,6 +29,8 @@
 
 
 @include('admin.diplome.RechercherEtudiant')
+@include('admin.diplome.voirall')
+
 
 
 
@@ -55,6 +57,7 @@
                      </div>
 
                  <div class="col-md-6">
+
                      <a href="" class="btn btn-primary float-end "  data-bs-toggle="modal" data-bs-target="#Rechechermodel">Effectuer une remise </a>
 
                  </div>
@@ -107,35 +110,43 @@
                           <table class="table ">
                             <thead>
                                <tr>
-                                    <th>No</th>
+
                                     <th>Code Etudiant</th>
                                     <th>Nom Et Prenom</th>
-                                    <th>fichier</th>
+                                    <th>No fichier</th>
                                     <th>categorie</th>
+                                    <th>fichier</th>
+                                    <th>programme</th>
+                                    <th>faculté</th>
                                     <th>Date Emission</th>
                                     <th>No Enr. Uniq</th>
                                     <th>Code MNFP</th>
-                                    <th>Etat</th>
-                                    <th>user</th>
-                                    <th>Date ceation</th>
-                                    <th>edite</th>
+                                     <th>Etat</th>
+                                    <th>Livré par </th>
+                                    <th>Date livraison</th>
+                                     <th>edite</th>
                                     <th>supprimer</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($diplomes as $diplome)
+                                @foreach ($etudiants as $etudiant)
+                                @foreach ($etudiant->diplomes as $diplome)
                                 <tr>
+
+
+                                    <td>{{ $etudiant->codeEtudiant }}</td>
+                                    <td>{{ $etudiant->nom }} {{ $etudiant->prenom }} </td>
                                     <td>{{ $diplome->id }}</td>
-                                    <td>{{ $diplome->codeEtudiant }}</td>
-                                    <td>john pierre-widno Dorcy</td>
-                                    <td> <a target="_new" href="{{ url('/uploads/diplome/'.$diplome->cheminVerfichier.'') }}">{{ $diplome->cheminVerfichier }}</a></td>
-                                    <td>{{ $diplome->categorie }}</td>
+                                    <td><a target="_new" href="{{ url('/uploads/diplome/'.$diplome->cheminVerfichier.'') }}">{{ $diplome->cheminVerfichier }}</a></td>
+                                    <td>{{ $diplome->categorie->nomCategorie }}</td>
+                                    <td>{{ $diplome->programme->nomProgramme }}</td>
+                                    <td>{{ $diplome->programme->codeFaculte }}</td>
                                     <td>{{ $diplome->DateEmission }}</td>
                                     <td>{{ $diplome->NumeroEnrUniq }}</td>
                                     <td>{{ $diplome->CodeMNFP }}</td>
-                                    <td>{{ $diplome->status }}</td>
-                                    <td>{{ $diplome->user_id }}</td>
-                                    <td>{{ $diplome->created_at }}</td>
+                                    <td>{{ $diplome->etat }}</td>
+                                    <td>{{ $diplome->user->name }}</td>
+                                    <td>{{ $diplome->DateLivraison }}</td>
                                     <td><a href=" {{ url('admin/diplome/'.$diplome->id.'/'.$diplome->codeEtudiant.'/edit') }}"> <i class="mdi mdi-pencil-circle btn  bg-dark text-white"></i> </a></td>
                                     <td>
                                         <button class="btn  bg-danger " wire:click="deleteremise('{{ $diplome->id }}')" data-code="{{ $diplome->id }}" data-bs-toggle="modal" data-bs-target="#DiplomeModel">
@@ -147,7 +158,8 @@
 
 
                                 </tr>
-                                @endforeach
+                              @endforeach
+                              @endforeach
                             </tbody>
                           </table>
                         </div>
@@ -156,10 +168,18 @@
 
                     <div class="row">
                       <div class="col-md-9">
-                          <div> {{ $diplomes->links( ) }}   </div>
+                       <div>  {{ $etudiants->links( ) }}
+                        <a class="f" href="/diplome/fullscreen" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Voir en plein d'ecran
+                        </a>
+
+                    </div>
                       </div>
                       <div class="col-md-3">
-                          <div><p class="float-end">Total: {{ $dataCount }}</p></div>
+
+                          <div><p class="float-end">Total: {{ $dataCount }}</p>
+
+                        </div>
                       </div>
                     </div>
 

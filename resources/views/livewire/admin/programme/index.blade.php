@@ -10,7 +10,7 @@
               <div class="modal-body">
                <h5>Etre vous sure de vouloir supprimer ?</h5>
               </div>
-              <form  wire:submit.prevent="destroyEtudiant">
+              <form  wire:submit.prevent="destroyprogramme">
                 <div class="modal-footer">
                     <button  class="btn btn-secondary" >Fermer</button>
                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Supprimer</button>
@@ -46,7 +46,8 @@
                             <tr>
                                 <th>Code programe</th>
                                 <th>Nom Programme</th>
-                                <th>OPtion</th>
+                                <th>Option</th>
+                                <th>Faculté</th>
                                 <th>Editer</th>
                                 <th>Supprimer</th>
 
@@ -58,6 +59,7 @@
                                 <td> {{ $programme->codeProgramme }}</td>
                                 <td> {{ $programme->nomProgramme }}</td>
                                 <td> {{ $programme->option }}</td>
+                                <td> {{ $programme->codeFaculte }}</td>
                                 <td>
                                     <a class="btn   bg-success" href="{{ url('admin/programme/'.$programme->codeProgramme.'/editerpage') }}" >
                                       <i class=" bg-success mdi mdi-pencil-circle text-white"></i>

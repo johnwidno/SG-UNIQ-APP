@@ -7,6 +7,7 @@ use App\Http\Requests\EtudiantFormRequest;
 use App\Http\Requests\EtudiantforRequest;
 use App\Models\Diplome;
 use App\Models\Etudiant;
+use App\Models\Etudiant_Programme;
 use App\Models\EtudiantFaculte;
 use App\Models\Faculte;
 use App\Models\Programme;
@@ -42,25 +43,44 @@ public function insertEtudiant(EtudiantFormRequest $request)
 
   try{
     $etudiant = new Etudiant();
+    $etudiantProgramme = new Etudiant_Programme();
 
     $etudiant->codeEtudiant = $request->input('code');
     $etudiant->nom = $request->input('nom');
     $etudiant->prenom = $request->input('prenom');
     $etudiant->sexe = $request->input('sexe');
-    $etudiant->save();
-    $etudiantFaculte= new EtudiantFaculte();
-    $etudiantFaculte->codeEtudiant=request()->input('code');
-    $etudiantFaculte->codeFaculte=request()->input('faculte');
-    $etudiantFaculte->save();
 
 
-   return  redirect('admin/etudiant')->with('message',"Etudiant Enregistré avec  succès.");
+     $faculte = Faculte::find($request->input('faculte'));
+     $programeOption = Programme::find($request->input('option'));
 
+     $Prog = Programme::where('codeProgramme','=',''. $programeOption->codeProgramme.'')->first();
+     if($Prog){
+        if($Prog->codeFaculte != $request->input('faculte') ){
+
+            return  back()->with('messagenotrouve',"option et programme ne marche pas.");
+        }else{
+            $etudiant->save();
+            // Attach the Faculte to the Etudiant in the pivot table
+            $etudiant->facultes()->attach($faculte->codeFaculte);
+          // $etudiant->Programmes()->attach($programeOption ->codeProgramme);
+
+           $etudiantProgramme->codeEtudiant= $request->input('code');
+           $etudiantProgramme->codeProgramme=$programeOption ->codeProgramme;
+           $etudiantProgramme->regime=$request->input('regime');
+           $etudiantProgramme->save();
+        return  redirect('admin/etudiant')->with('message',"Etudiant Enregistré avec  succès.");
+        }
+
+     }else{
+        return  back('admin/etudiant/nouveauEtudiant')->with('messagenotrouve',"progamme introuvable.");
+
+ }
 } catch (QueryException $exception) {
 
 
 
-   return redirect('admin/etudiant/')->with(['message' => 'Desolé!!!,Cet etudiant existe déja'] );
+   return redirect('admin/etudiant/nouveauEtudiant')->with(['messagenotrouve' => 'Desolé!!!,Cet etudiant existe déja'.$exception->getMessage()] );
 
 
 

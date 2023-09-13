@@ -28,7 +28,7 @@ class Index extends Component
     public function destroyEtudiant()
     {
         $etudiant = Etudiant::where('codeEtudiant', $this->codeEtudiantToDelete)->first();
-      
+
         if ($etudiant) {
             $etudiant->delete();
             return  redirect('admin/etudiant')->with('message',"Etudiant suprimé.");
@@ -49,9 +49,11 @@ class Index extends Component
 
     public function render()
     {
-        $etudiants = Etudiant::orderBy('created_at','desc')->paginate(5);
-       return view('livewire.admin.etudiant.index',['etudiants'=> $etudiants]);
-     
+        $etudiants = Etudiant::orderBy('created_at', 'desc')->paginate(5);
+
+        return view('livewire.admin.etudiant.index', compact('etudiants'));
+      // return view('livewire.admin.etudiant.index',compact('etudiants'));
+
     }
 public $facultescode ;
 

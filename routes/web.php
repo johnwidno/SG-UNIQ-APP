@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -33,7 +33,7 @@ Route::controller(App\Http\Controllers\Admin\EtudiantController::class)->group(f
     Route::get('/etudiant/nouveauEtudiant', 'nouveauEtudiant');
     Route::post('/etudiant', 'insertEtudiant');
      Route::get('/etudiant/{etudiant}/edit', 'editer');
-    Route::put('/etudiant/{etudiant}', 'UpdateEtudiant');
+    Route::put('/etudiant/{etudiant}','UpdateEtudiant');
     Route::get('/etudiant/{etudiant}/delete', 'deleteEtudiant');
     Route::get('/etudiant/search', 'rechercheUnEtudiant');
 });
@@ -59,8 +59,9 @@ Route::controller(App\Http\Controllers\Admin\ProgrammeController::class)->group(
     Route::get('/programme/addprogramme', 'addprogrammepage');
     Route::post('/programme', 'addprogrammefuntion');
     Route::get('programme/{programme}/editerpage', 'editerprogramepage');
-    Route::get('/programme/{programme}', 'UpdateProgramme');
-    Route::put('/programme/{programme}/delete', 'UpdateProgramme');
+    //Route::put('/programme/edit/{programme}', 'UpdateProgramme');
+    Route::put('/programme/{programme}','UpdateProgramme');
+    //Route::put('/programme/{programme}/delete', 'UpdateProgramme');
 
 });
 
@@ -74,16 +75,27 @@ Route::controller(App\Http\Controllers\Admin\DiplomeController::class)->group(fu
     Route::get('/diplome/{diplome}', 'updateremise');
     Route::get('/diplome/remise/search', 'rechercheUnEtudiant');
     Route::get('/diplome/recherche/search', 'EtudiantWithallinfos');
-    Route::get('/diplome/remise/livre', 'diplomeparusers');
+    Route::get('/diplome/recherche/livre/search', 'EtudiantWithallinfos');
+    Route::get('/diplome/remise/livre', 'etudiantfaculte');
+    Route::get('/diplome/fullscreen', 'voirall');
 
-
-
-    //Route::put('/diplome/{diplome}/delete', 'deletRemise');
+   //Route::put('/diplome/{diplome}/delete', 'deletRemise');
    // Route::put('/diplome/{diplome}/select', 'selectall');
 
 
 });
 
+
+
+
+Route::controller(App\Http\Controllers\Admin\CategorieController::class)->group(function () {
+    Route::get('/categorie', 'index');
+    Route::post('/categorie', 'nouveaucategorie');
+    Route::get('/categorie/{categorie}/edit', 'editercategoriepage');
+    Route::put('/categorie/{categorie}', 'UpdateCategorie');
+    Route::get('/categorie/{categorie}/delete', 'destroycategorie');
+
+});
 
 
 

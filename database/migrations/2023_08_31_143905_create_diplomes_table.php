@@ -15,16 +15,20 @@ return new class extends Migration
             $table->id();
             $table->string('codeEtudiant');
             $table->string('cheminVerfichier');
-            $table->string('categorie');
-            $table->date('DateEmission')->nullable();
+            $table->unsignedBigInteger('categorie_id');
+            $table->date('DateEmission');
+            $table->date('DateLivraison')->nullable();
             $table->string('NumeroEnrUniq');
             $table->string('CodeMNFP');
-            $table->tinyInteger('etat')->default('0')->comment('1="remis , non-remis');;
+            $table->string('etat',15);
+            $table->unsignedBigInteger('codeProgramme');
             $table->string('Receveur');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('codeEtudiant')->references('codeEtudiant')->on('etudiants')->onDelete('cascade');
+            $table->foreign('codeProgramme')->references('codeProgramme')->on('Programmes')->onDelete('cascade');
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();
@@ -39,6 +43,8 @@ return new class extends Migration
         Schema::create('diplomes', function (Blueprint $table) {
             $table->dropForeign("codeEtudiant");
             $table->dropForeign("user_id");
+            $table->dropForeign("categorie_id");
+            $table->dropForeign("codeProgramme");
 
 
         });

@@ -1,25 +1,31 @@
 
 <div>
-<div class="modal fade" id="deleteModal" tabindex="-1"  wire:ignore.self  aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="deleteModal">Suppression</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-           <h5>Etre vous sure de vouloir supprimer ?</h5>
-          </div>
-          <form  wire:submit.prevent="destroyEtudiant">
-            <div class="modal-footer">
-                <button  class="btn btn-secondary" >Fermer</button>
-                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Supprimer</button>
 
+<div wire:ignore.self  class="modal fade" id="DelModel" tabindex="-1" aria-labelledby="DelModellLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </form>
-        </div>
+            <div class="modal-body text-danger">
+                <h5>Etre vous sure de vouloir supprimer ?</h5>
+                <small>NB: En supprimant cet étudiant, vous risquez de perdre toutes les informations associées à cet étudiant.</small>
+            </div>
+                <form  wire:submit.prevent="destroyEtudiant">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+
+                    </div>
+                </form>
+
+
+      </div>
     </div>
 </div>
+
+
+
 
 <div class="row">
 <div class="col-md-12">
@@ -86,6 +92,7 @@
 <div class="card-body">
 
     <div class="card"  wire:scroll="loadMore">
+
 <table class="table table-border  table-hover table-striped ">
 
   <thead>
@@ -103,11 +110,14 @@
 
 <tbody>
  @foreach ($etudiants as $etudiant)
+
     <tr class="">
         <td> {{ $etudiant->codeEtudiant }}</td>
         <td> {{ $etudiant->nom }}</td>
         <td> {{ $etudiant->prenom }}</td>
         <td> {{ $etudiant->sexe }}</td>
+
+
 
         <td>
             <a class="btn   bg-success" href="{{ url('admin/etudiant/'.$etudiant->codeEtudiant.'/edit') }}" >
@@ -116,14 +126,17 @@
         </td>
             <td>
 
-            <button class="btn  bg-danger " wire:click="deleteEtudiant('{{ $etudiant->codeEtudiant }}')" data-code="{{ $etudiant->codeEtudiant }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            <button class="btn  bg-danger " wire:click="deleteEtudiant('{{ $etudiant->codeEtudiant}}')" data-code="{{ $etudiant->codeEtudiant}}" data-bs-toggle="modal" data-bs-target="#DelModel">
+
+           <!-- <button class="btn  bg-danger " wire:click="deleteEtudiant('{{ $etudiant->codeEtudiant }}')"  data-bs-toggle="modal" data-bs-target="#deleteModal">-->
                 <i class="mdi mdi-delete-circle  bg-danger text-white"></i>
             </button>
         </td>
             <td>
-            <a class="btn  bg-dark   href=">    <i class="mdi mdi-plus-circle text-white bg-dark"  text-white"></i></a>
+            <a class="btn  bg-dark " href="{{ url('admin/diplome/recherche/search/?search='. $etudiant->codeEtudiant) }} ">  <i class="mdi mdi-plus-circle text-white bg-dark  text-white"></i></a>
             </td>
    </tr>
+
 @endforeach
 </tbody>
 </table>

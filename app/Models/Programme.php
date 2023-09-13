@@ -14,11 +14,26 @@ class Programme extends Model
     protected $fillable = [
         'codeProgramme',
         'nomProgramme',
-        'option'
+        'option',
+        'codefaculte',
         ];
 
-        public function Faculte(){
-            $this->belongsTo(Faculte::class,);
-        }
+
+
+public function etudiants()
+{
+    return $this->belongsToMany(Etudiant::class, 'etudiant__programme', 'codeProgramme', 'codeEtudiant');
+}
+public function faculte()
+    {
+        return $this->belongsTo(Faculte::class,'codeFaculte');
+    }
+
+
+    public function diplome()
+    {
+        return $this->belongsTo(Programme::class,'codePrograme');
+    }
+
 
 }

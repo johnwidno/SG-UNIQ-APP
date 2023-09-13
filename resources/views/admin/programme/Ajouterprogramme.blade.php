@@ -47,7 +47,22 @@
                 @error('option')
                 <div class="error  text-danger">{{ $message }}</div>
             @enderror
+            <br>
             </div>
+
+                <div class="col-md-12 nb-3">
+                    <label name="" for="faculte">Faculté</label>
+                    <select name="faculte" class="form-control ">
+                        <option value=""></option>
+                        @foreach ($facultes as $faculte)
+                        <option value="{{ $faculte->codeFaculte}}">{{ $faculte->codeFaculte }}</option>
+                        @endforeach
+                    </selecT>
+                    @error('faculte')
+                    <div class="error  text-danger">{{ $message }}</div>
+                    @enderror
+
+                </div>
 
 
 

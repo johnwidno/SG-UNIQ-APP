@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('etudiantfacultes', function (Blueprint $table) {
+        Schema::create('etudiant_faculte', function (Blueprint $table) {
             $table->id();
             $table->string('codeEtudiant');
             $table->string('CodeFaculte');
             $table->foreign('codeEtudiant')->references('codeEtudiant')->on('etudiants')->onDelete('cascade');
             $table->foreign('CodeFaculte')->references('CodeFaculte')->on('facultes')->onDelete('cascade');
-           $table->timestamps();
-
+            $table->timestamps();
         });
     }
 
@@ -27,12 +26,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-        Schema::drpo('etudiantfacultes', function (Blueprint $table) {
+        Schema::drpo('etudiant_faculte', function (Blueprint $table) {
             $table->id();
             $table->dropForeign('codeEtudiant');
             $table->dropForeign('CodeFaculte');
              });
-        Schema::dropIfExists('etudiantfacultes');
+        Schema::dropIfExists('etudiant_faculte');
     }
 };

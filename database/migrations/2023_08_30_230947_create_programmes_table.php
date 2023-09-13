@@ -15,6 +15,8 @@ return new class extends Migration
             $table->unsignedBigInteger('codeProgramme')->primary()->unique();
              $table->String('nomProgramme');
              $table->String('option');
+             $table->String('codeFaculte');
+             $table->foreign('codeFaculte')->references('codeFaculte')->on('facultes')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +26,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::drpo('programmes', function (Blueprint $table) {
+            $table->id();
+        $table->dropForeign('codeFaculte');
+             });
         Schema::dropIfExists('programmes');
     }
 };

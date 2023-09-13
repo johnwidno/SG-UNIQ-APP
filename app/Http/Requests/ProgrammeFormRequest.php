@@ -25,6 +25,7 @@ class ProgrammeFormRequest extends FormRequest
             'codeProgramme'=>'required|integer',
             'nomProgramme'=>'required|string|max:255',
             'option'=>'required|string|max:255',
+            'faculte'=>'required|string',
         ];
     }
 }

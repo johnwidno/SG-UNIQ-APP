@@ -20,10 +20,19 @@ class Etudiant extends Model
     ];
 
 
+
    public  function diplomes(){
     return $this->hasMany(Diplome::class, 'codeEtudiant');
    }
-  
+
+   public function facultes()
+   {
+       return $this->belongsToMany(Faculte::class, 'etudiant_faculte', 'codeEtudiant', 'codeFaculte');
+   }
+   public function Programmes()
+   {
+       return $this->belongsToMany(Programme::class, 'etudiant__programme', 'codeEtudiant', 'codeProgramme')->withPivot('regime');
+   }
 
 
 

@@ -1,3 +1,5 @@
+<div>
+    @include('admin.diplome.voirall')
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card">
@@ -16,38 +18,34 @@
 
 
 
+
+
           <div class="tab-content py- px-0">
             <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
               <div class="d-flex flex-wrap justify-content-xl-between">
-                @foreach ($facultes as $faculte)
+
+                @foreach ($programmes as $prog)
                 <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                    <i class="mdi mdi-circle me-2 icon-md text-danger"></i>
+                    <i class="mdi mdi-school me-2 icon-md text-danger"></i>
 
 
                  <div class="d-flex flex-column justify-content-around" >
 
-                    <div class="dropdown" >
+                    <div class="dropdown " >
                       <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium" href="#" role="button" id="dropdownMenuLinkA" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <small class="mb-1 text-muted">{{ $faculte->codeFaculte}}</small>
+                        <small class="mb-1 text-muted">{{ $prog->codeFaculte}}</small>
                       </a>
-                      <h6>0</h6>
-                      <div  class="dropdown-menu " aria-labelledby="dropdownMenuLinkA">
-                        <small  class=" text">{{ $faculte->nom}}</small>
+
+                      <h6>{{ $prog->etudiants->count()}}</h6>
+                      <div  class="dropdown-menu " style="width: 350px; text-transform: uppercase; padding: 5px " aria-labelledby="dropdownMenuLinkA">
+                        <p class="text ">{{ $prog->faculte->nom}}</p>
+
 
                         </div>
                     </div>
                   </div>
                 </div>
-
                 @endforeach
-
-
-
-
-
-
-
-
 
               </div>
             </div>
@@ -56,107 +54,44 @@
 
 
 
+           <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+            <div class="row" style="margin:5px;"">
+                <div class="col-md-6"> <h6>Nom programme</h6> </div>
+                <div class="col-md-6"><h6>Total : </h6></div>
+                <hr>
 
-            <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
-              <div class="d-flex flex-wrap justify-content-xl-between">
-                <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-calendar-heart icon-lg me-3 text-primary"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    @foreach ($progammes as $programme)
-                    <small class="mb-1 text-muted">{{ $programme->option }}</small>
-                    <div class="dropdown">
-                      <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium" href="#" role="button" id="dropdownMenuLinkA" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <h5 class="mb-0 d-inline-block">{{ $programme->nomProgramme }}</h5>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkA">
-                        <a class="dropdown-item" href="#">{{ $programme->nomProgramme }}</a>
-
-                      </div>
-                    </div>
-
-                @endforeach
-
-                  </div>
-                </div>
-
-
-                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-download me-3 icon-lg text-warning"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Downloads</small>
-                    <h5 class="me-2 mb-0">2233783</h5>
-                  </div>
-                </div>
-                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-eye me-3 icon-lg text-success"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Total views</small>
-                    <h5 class="me-2 mb-0">9833550</h5>
-                  </div>
-                </div>
-                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-currency-usd me-3 icon-lg text-danger"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Revenue</small>
-                    <h5 class="me-2 mb-0">$577545</h5>
-                  </div>
-                </div>
-                <div class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-flag me-3 icon-lg text-danger"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Flagged</small>
-                    <h5 class="me-2 mb-0">3497843</h5>
-                  </div>
-                </div>
-              </div>
             </div>
+                @foreach ($programmes as $programme)
+
+                            <div class="row" style="margin:5px;">
+                                <div class="col-md-6">
+                                    <p >{{ $programme->nomProgramme}} </p></div>
+                                <div class="col-md-6">
+                                     <p > {{  $programme->etudiants->count() }}</p></div>
+
+                            </div>
+
+               @endforeach
+              </div>
+
             <div class="tab-pane fade" id="purchases" role="tabpanel" aria-labelledby="purchases-tab">
-              <div class="d-flex flex-wrap justify-content-xl-between">
-                <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-calendar-heart icon-lg me-3 text-primary"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Start date</small>
-                    <div class="dropdown">
-                      <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium" href="#" role="button" id="dropdownMenuLinkA" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <h5 class="mb-0 d-inline-block">26 Jul 2018</h5>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkA">
-                        <a class="dropdown-item" href="#">12 Aug 2018</a>
-                        <a class="dropdown-item" href="#">22 Sep 2018</a>
-                        <a class="dropdown-item" href="#">21 Oct 2018</a>
-                      </div>
+                <div class="row" style="margin:5px;">
+                    <div class="col-md-6"> <h6>Option / Dicipline</h6> </div>
+                    <div class="col-md-6"><h6>Total : </h6></div>
+                    <hr>
+
+                </div>
+
+
+                    @foreach ($programmes as $programme)
+
+                    <div class="row " style="margin:5px;">
+                        <div class="col-md-6"> <p >{{$programme->option}} </p></div>
+                        <div class="col-md-6"> <p > {{ $programme->etudiants->count() }}</p></div>
+
                     </div>
-                  </div>
-                </div>
-                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-currency-usd me-3 icon-lg text-danger"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Revenue</small>
-                    <h5 class="me-2 mb-0">$577545</h5>
-                  </div>
-                </div>
-                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-eye me-3 icon-lg text-success"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Total views</small>
-                    <h5 class="me-2 mb-0">9833550</h5>
-                  </div>
-                </div>
-                <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-download me-3 icon-lg text-warning"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Downloads</small>
-                    <h5 class="me-2 mb-0">2233783</h5>
-                  </div>
-                </div>
-                <div class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
-                  <i class="mdi mdi-flag me-3 icon-lg text-danger"></i>
-                  <div class="d-flex flex-column justify-content-around">
-                    <small class="mb-1 text-muted">Flagged</small>
-                    <h5 class="me-2 mb-0">3497843</h5>
-                  </div>
-                </div>
-              </div>
+                     @endforeach
+
             </div>
           </div>
         </div>
@@ -172,19 +107,27 @@
     <div class="col-md-7 grid-margin   stretch-card">
       <div class="card">
         <div class="card-body">
-          <p class="card-title">Rapports sur Categories</p>
+          <p class="card-title">Rapports</p>
+
 
           <div class="card-body">
-            <p class="card">certificat</p>
-            <h4>28835</h4>
+            <div class="row">
+                <h6>Categories</h6>
+                @foreach ($categories as $categorie)
+                <div class="col-md-6">  <p>{{ $categorie->nomCategorie}}</p></div>
+                <div class="col-md-6">  <p>{{ $categorie->diplomes->count()}}</p></div>
+
+                <hr>
+                @endforeach
 
 
-            <p class="card">Liscence </p>
-            <h4>28835</h4>
+                <div class="col-md-3">  <p>Total Etudiant :</p></div>
+                <div class="col-md-4"><h6>{{ $totaletudiant }}</h6></div>
 
+                <div class="col-md-4">  <p>Nombre Programme :</p></div>
+                <div class="col-md-1"><h6>{{ $totalprograme }}</h6></div>
 
-            <p class="card">Maitrise </p>
-            <h4>28835</h4>
+            </div>
           </div>
 
         </div>
@@ -199,18 +142,24 @@
                 <i class="mdi mdi-plus-circle text-muted"></i>
               </button>
             </p>
-          <p class="card">Total remis</p>
-          <h4>28835</h4>
 
 
-          <p class="card">Non remis</p>
-          <h4>28835</h4>
 
+          <div class="row">
 
-          <p class="card">en cours d'analyse </p>
-          <h4>28835</h4>
+            @foreach ($diplomesParetats as $etat)
+            <div class="col-md-6"> <p> Total : {{ $etat->etat}}</p> </div>
+            <div class="col-md-6"><h6>{{ $etat->quantite}}</h6></div>
+            <hr>
+            @endforeach
+            <div ><a href="" class="float-end ">voir tous les diplomes non-livré </a></div>
+
+        </div>
+
         </div>
 
       </div>
     </div>
   </div>
+
+</div>
