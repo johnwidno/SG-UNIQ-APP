@@ -10,7 +10,7 @@ Ce projet permet la gestion de la remise des diplome des etudiants .
 ## Presentation
   <img src="https://github.com/johnwidno/SG-UNIQ-APP/assets/100108327/3df1b415-6cfc-4adb-8b0b-5d97c2061c8b"><br>
 
-##Quelques fonctionnalités
+## Quelques fonctionnalités
 Dans cette partie L'utilisateur peut:
 - enregistre une categorie de diplome(liscence, diplo ect..) puis effectuer des mis a jour (etition, supp).
 - enregistre une faculte puis effectuer des mis a jour (etition,Suppression).
