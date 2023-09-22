@@ -32,8 +32,7 @@ Dans cette partie L'utilisateur peut:
 - Ajouter de nouvelles utilisateurs et atribution de roles.
 - editer , modifier ou suprimer un utlkisateurs
 
-  <img src="![sguniq2](https://github.com/johnwidno/SG-UNIQ-APP/assets/100108327/127b50a7-0dd2-4574-8440-66c66732eea1)
-"><br>
+  <img src="https://github.com/johnwidno/SG-UNIQ-APP/assets/100108327/127b50a7-0dd2-4574-8440-66c66732eea1"><br>
 
 
 
