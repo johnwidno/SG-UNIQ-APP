@@ -9,13 +9,26 @@ Ce projet permet la gestion de la remise des diplome des etudiants .
 - 3- codage - frame work Laravel - 5 - bootsrapp - jquery ect..
 
 
+
 Dans cette partie L'utilisateur peut:
 - enregistre une categorie de diplome(liscence, diplo ect..) puis effectuer des mis a jour (etition, supp).
 - enregistre une faculte puis effectuer des mis a jour (etition,Suppression).
 - enregistre une programme puis effectuer des mis a jour (etition,Suppression).
-- Effectuer iune remise de diplome  effectuer des mis a jour (etition,Suppression ect..).
+- Effectuer une remise de diplome  effectuer des mis a jour (etition,Suppression ect..).
 - voir en resume les quantite de diplomes remis par faculte, programe ect..
 - Afficher toutes les informations concernant les diplomes en plein ecran.
+
+## Nouvelles fonctionalités
+- Aficher la liste des etudiants par faculté.
+- Aficher la liste des etudiants par option.
+- Aficher la liste des utudiants par date de livraison.
+- Efectuer un impression ou creer une liste en format pdf.
+- Ajouter de nouvelles utilisateurs et atribution de roles.
+- editer , modifier ou suprimer un utlkisateurs
+- 
+
+
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

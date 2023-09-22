@@ -189,13 +189,13 @@
                         </div>
 
 
-                        <div class="col-md-3 nb-3 pt-3">
+                        <div class="col-md-6 nb-3 pt-3">
 
                             <label for="">Etat</label>
                                <select name="etat" class="form-select" >
                                 <option value=""></option>
                                 <option value="Livré">Livré</option>
-                                <option value="non-livré">Non-livré</option>
+                                <option value="Non-livré">Non-livré</option>
                                 </selecT>
                             @error('etat')
                             <div class="error  text-danger">{{ $message }}</div>
@@ -204,20 +204,14 @@
 
 
 
-                    <div class="col-md-5 nb-3 pt-3">
+                    <div class="col-md-6 nb-3 pt-3">
                         <label for="sexe">receveur </label>
                         <input type="text" name= 'receveur' class="form-control">
                         @error('receveur')
                         <div class="error  text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-md-4 nb-2 pt-3">
-                            <label for="sexe">Date Livraison</label>
-                            <input type="date" name= 'DateLivraison' class="form-control">
-                            @error('DateEmission')
-                            <div class="error  text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+
 
 
 

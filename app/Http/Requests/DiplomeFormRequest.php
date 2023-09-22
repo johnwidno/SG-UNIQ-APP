@@ -28,7 +28,7 @@ class DiplomeFormRequest extends FormRequest
             //'fichier' => 'required|file|mimes:pdf|max:5120',
            'categorie_id' => 'required|string',
             'DateEmission' => 'required|date',
-            'DateLivraison'=>'date',
+            //'DateLivraison'=>'date',
             'NumeroEnrUniq' => 'required|string',
             'mnfpCode' => 'required|string',
             'nom' => 'required|string',
@@ -37,7 +37,7 @@ class DiplomeFormRequest extends FormRequest
             'option' => 'required|string',
             'faculte' => 'required|string',
             'etat' => 'required|string',
-            'receveur' => 'required|String',
+            //'receveur' => 'required|String',
             'user_id' => 'required|integer',
 
         ];

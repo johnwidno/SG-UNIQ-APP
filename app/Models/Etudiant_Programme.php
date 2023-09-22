@@ -14,5 +14,15 @@ class Etudiant_Programme extends Model
         'codeProgramme',
         'regime',
         ];
+        public function etudiant()
+        {
+            return $this->belongsTo('App\Models\Etudiant', 'codeEtudiant');
+        }
+
+        public function programme()
+        {
+             return $this->belongsTo('App\Models\Programme', 'codeProgramme');
+        }
+
 
 }

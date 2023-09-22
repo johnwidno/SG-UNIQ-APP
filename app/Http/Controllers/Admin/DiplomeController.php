@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiplomeFormRequest;
+use App\Http\Requests\MakeAslivreRequest;
 use App\Livewire\Categories;
 use App\Models\Categorie;
 use App\Models\Diplome;
@@ -13,12 +14,14 @@ use App\Models\EtudiantFaculte;
 use App\Models\Faculte;
 use App\Models\Programme;
 use App\Models\User;
+use Carbon\Carbon;
 use DateTime;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Database\DBAL\TimestampType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use NunoMaduro\Collision\Adapters\Phpunit\Style;
 
@@ -78,6 +81,27 @@ class DiplomeController extends Controller
         $diplome->etat = $request->input('etat');
         $diplome->user_id =$request->input('user_id');
         $diplome->description =$request->input('description');
+        if ($request->input('etat') === 'Non-livré') {
+            $diplome->DateLivraison = null;
+            $diplome->receveur = '';
+        } else {
+
+
+
+            //$diplome->DateLivraison = $request->input('DateLivraison');
+            $diplome->DateLivraison = Carbon::today();
+            $diplome->receveur = $request->input('receveur');
+
+            if($request->input('receveur') ===null){
+                $diplome->receveur = $request->input('nom').' '.$request->input('prenom');
+
+            }
+
+
+        }
+
+
+
         $diplome->update();
         $programeOption = Programme::find($request->input('option'));
         $etudiant = Etudiant::find($request->input('codeEtudiant'));
@@ -142,20 +166,37 @@ class DiplomeController extends Controller
                 ////prepare les infos pour insetion .////
 
                 $diplome->DateEmission = $request->input('DateEmission');
-                $diplome->DateLivraison = $request->input('DateLivraison');
-                $diplome->NumeroEnrUniq = $request->input('NumeroEnrUniq');
+            $diplome->NumeroEnrUniq = $request->input('NumeroEnrUniq');
                 $diplome->categorie_id = $request->input('categorie_id');
                 $diplome->CodeMNFP = $request->input('mnfpCode');
                 $diplome->etat = $request->input('etat');
-                $diplome->receveur= $request->input('receveur');
+
                 $diplome->codeProgramme = $request->input('option');
                 $diplome->description = $request->input('description');
                 $diplome->user_id =$request->input('user_id');
-                    ///*Verifier si le dipolme a ete deja atribuer exist. si oui annuler l'enregistreme
+
+
+                if ($request->input('etat') === 'Non-livré') {
+                    $diplome->DateLivraison = null;
+                    $diplome->receveur = '';
+                } else {
+
+
+                    // Assurez-vous de récupérer la date de livraison et le receveur depuis la requête
+                    //$diplome->DateLivraison = $request->input('DateLivraison');
+                    $diplome->DateLivraison = Carbon::today();
+                    $diplome->receveur = $request->input('receveur');
+
+                    if($request->input('receveur') ===null){
+                        $diplome->receveur = $request->input('nom').' '.$request->input('prenom');
+
+                    }
+                }
+
+                ///*Verifier si le dipolme a ete deja atribuer exist. si oui annuler l'enregistreme
                     $diplomeexist = Diplome::where('codeEtudiant', $request->input('codeEtudiant'))
                     ->where('codeProgramme', $request->input('option'))
                     ->first();
-
                     if($diplomeexist){
 
                          return back()->with('message',"desolé !!!Ce diplome a été deja attribué depuis le -  '  choisir une autre option ou dicipline ");
@@ -200,11 +241,22 @@ class DiplomeController extends Controller
                             //return redirect('admin/diplome')->with('message',"Operation effectué avec succès. Assurez vous de livrer le fichier a son propriétaire.");
                         }else{
                             $diplome->save();
+
                             $etudiantProgramme = new Etudiant_Programme();
+
                             $etudiantProgramme->codeEtudiant=$request->input('codeEtudiant');
                             $etudiantProgramme->codeProgramme=$request->input('option');
                             $etudiantProgramme->regime=$request->input('regime');
+
+                           /*  //$etudiantfaculte = new EtudiantFaculte();
+                           //$etudiantfaculte->codeFaculte=$request->input('faculte');      ;
+                            //$etudiantfaculte->codeEtudiant=$request->input('codeEtudiant');
+                            //$etudiantfaculte->save();// */
+
                             $etudiantProgramme->save();
+
+
+
                             $file->move('uploads/diplome',$filename);
                             return redirect('admin/diplome')->with('message',"Operation effectué avec succès.  Etudiant diplome enregistre pour un nouveau programe, Assurez vous de livrer le fichier a son propriétaire.");
 
@@ -328,35 +380,34 @@ class DiplomeController extends Controller
    }
 
 
+   public function Makeaslivrepage (Diplome $diplome){
 
-   public function Makeaslivre( DiplomeFormRequest $request , $id) {
 
-    $diplome = Diplome::find($id);
+    return view('admin.diplome.Changeretatdiplome',compact('diplome'));
+   }
+
+
+public function Makeaslivre(MakeAslivreRequest $request, $diplome){
+
+   $diplome = Diplome::find($diplome);
+   $etudiant= Etudiant::find($diplome->codeEtudiant);
     try{
 
     if ($diplome) {
 
+    $diplome->etat =$request->input('etat');
+    $diplome->DateLivraison = Carbon::today();
+    $diplome->save();
 
+    return view('admin.etudiant.Rechecheretudiant',compact('etudiant'))->with('message',"modification effectuer avec succès");
 
-    $diplome->etat = $request->input('etal');
-    $diplome->DateEmission = $request->input('DateEmission');
-    $diplome->Receveur = $request->input('receveur');
-    $diplome->user_id =$request->input('user_id');
-
-    $diplome->update();
-
-
-
-        return  redirect('admin/diplome')->with('message',"Etudiant updated successfully.");
     } else {
-        return  redirect('admin/diplome')->with('message',"Etudiant non trouvé.");
+        return  redirect('admin/diplome')->with('message',"diplome non trouvé.");
     }
 
-} catch (\Exception $e) {
-    return  redirect('admin/diplome')->with('message',"Impossible de modifier : ".$e->getMessage());
-}
-
-
+    } catch (\Exception $e) {
+        return  redirect('admin/diplome')->with('message',"Impossible de modifier : ".$e->getMessage());
+    }
 
 }
 
@@ -364,11 +415,171 @@ class DiplomeController extends Controller
 
 public function voirall(){
 
-    $etudiants=Etudiant::all('*');
-    return view('admin.diplome.voirall',compact('etudiants'));
+    $diplomes= Diplome::all('*');
+    return view('admin.diplome.voirall',compact('diplomes'));
 
 
 }
 
 
+
+
+
+public function etudiantsParProgramme(Request $request)
+{
+
+    $facultes = Faculte::all('*');
+    $programmes = Programme::all('*');
+
+    $diplomesdatesLivraison = DB::table('diplomes')
+                    ->select('DateLivraison')
+                    ->groupBy('DateLivraison')
+                    ->orderBy('DateLivraison', 'desc')
+                    ->get();
+
+
+
+    $programmeId = $request->input('codeprogramme');
+    $programme = Programme::findOrFail($programmeId);
+    $optionrechere=  $programme->option;
+    $faculteprog=  $programme->codeFaculte;
+
+    $etudiants =  Etudiant::join('etudiant__programme', 'etudiant__programme.codeEtudiant', '=', 'etudiants.codeEtudiant')
+    ->join('programmes', 'etudiant__programme.codeProgramme', '=', 'programmes.codeProgramme')
+    ->join('diplomes', function ($join) {
+        $join->on('programmes.codeProgramme', '=', 'diplomes.codeProgramme')
+             ->on('etudiants.codeEtudiant', '=', 'diplomes.codeEtudiant');
+    })
+    ->where('programmes.codeProgramme', $programmeId)
+    ->get();
+    
+    $Quantitediplome=  $etudiants->count();
+
+    return  view('admin.diplome.voirparentite',compact('etudiants','diplomesdatesLivraison','etudiants','facultes','programmes','optionrechere','Quantitediplome','faculteprog'));
 }
+
+
+public function etudiantsParFaculte(Request $request)
+{
+  $facultes = Faculte::all('*');
+ $programmes = Programme::all('*');
+    $diplomes = Diplome::all('*');
+    $faculte = $request->input('faculte');
+
+    $diplomesdatesLivraison = DB::table('diplomes')
+    ->select('DateLivraison')
+    ->groupBy('DateLivraison')
+    ->orderBy('DateLivraison', 'desc')
+    ->get();
+
+
+$etudiants =  Etudiant::join('etudiant__programme', 'etudiant__programme.codeEtudiant', '=', 'etudiants.codeEtudiant')
+->join('programmes', 'etudiant__programme.codeProgramme', '=', 'programmes.codeProgramme')
+->join('diplomes', function ($join) {
+    $join->on('programmes.codeProgramme', '=', 'diplomes.codeProgramme')
+         ->on('etudiants.codeEtudiant', '=', 'diplomes.codeEtudiant');
+})
+->where('programmes.codeFaculte', $faculte)
+->get();
+
+
+
+
+
+$optionrechere= '';
+$faculteprog= $faculte;
+$Quantitediplome=$etudiants->count('*');
+
+
+
+
+
+return  view('admin.diplome.voirparentite',compact('diplomesdatesLivraison','etudiants','facultes','programmes','optionrechere','Quantitediplome','faculteprog'));
+
+}
+
+public function etudiantsParFacultedsashbord(Request $request,$codefaculte)
+{
+   $facultes = Faculte::all('*');
+    $programmes = Programme::all('*');
+    $diplomes = Diplome::all('*');
+    $faculte = $codefaculte ;
+
+    $diplomesdatesLivraison = DB::table('diplomes')
+    ->select('DateLivraison')
+    ->groupBy('DateLivraison')
+    ->orderBy('DateLivraison', 'desc')
+    ->get();
+
+
+$etudiants = Etudiant::whereHas('programmes', function($query) use ($faculte) {
+    $query->where('codeFaculte', $faculte);
+})->with('programmes')->get();
+
+$optionrechere= '';
+$faculteprog= $faculte;
+$Quantitediplome=$etudiants->count('*');
+
+
+    return  view('admin.diplome.voirparentite',compact('diplomesdatesLivraison','etudiants','facultes','programmes','optionrechere','Quantitediplome','faculteprog'));
+   }
+
+
+
+public function etudiantspadateLivraison(Request $request)
+{
+   $facultes = Faculte::all('*');
+
+    $programmes = Programme::all('*');
+    $diplomes = Diplome::all('*');
+
+    $datelivraisondiplome = $request->input('DateLivraison');
+
+    $diplomesdatesLivraison = DB::table('diplomes')
+    ->select('DateLivraison')
+    ->groupBy('DateLivraison')
+    ->orderBy('DateLivraison', 'desc')
+    ->get();
+
+
+
+$etudiants =  Etudiant::join('etudiant__programme', 'etudiant__programme.codeEtudiant', '=', 'etudiants.codeEtudiant')
+->join('programmes', 'etudiant__programme.codeProgramme', '=', 'programmes.codeProgramme')
+->join('diplomes', function ($join) {
+    $join->on('programmes.codeProgramme', '=', 'diplomes.codeProgramme')
+         ->on('etudiants.codeEtudiant', '=', 'diplomes.codeEtudiant');
+})
+->where('diplomes.Datelivraison', $datelivraisondiplome)
+->get();
+
+
+
+
+$optionrechere= '';
+$faculteprog= $datelivraisondiplome;
+$Quantitediplome=$etudiants->count('*');
+
+
+    return  view('admin.diplome.voirparentite',compact('diplomesdatesLivraison','etudiants','facultes','programmes','optionrechere','Quantitediplome','faculteprog'));
+   }
+
+
+public function diplomeetat(Request $request)
+{
+
+
+$diplomes= Diplome::where('etat','=', $request->input('etat'))->get();
+$etatrecherchere=$request->input('etat');
+$diplomesetats=DB::table('diplomes')
+->select('etat')
+->groupBy('etat')->get();
+
+return view('admin.diplome.Listeparetat',compact('diplomes','etatrecherchere','diplomesetats'));}
+
+
+
+
+
+
+}
+

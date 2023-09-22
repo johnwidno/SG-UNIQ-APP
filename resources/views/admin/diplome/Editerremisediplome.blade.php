@@ -92,9 +92,6 @@
                     <option value="{{ $programme->codeProgramme}}">{{ $programme->option }}</option>
                     @endforeach
                 </selecT>
-                @foreach ($etudiant->programmes as $programme)
-                <option value="{{  $programme->pivot->regime  }}" selected>{{  $programme->pivot->regime  }}</option>
-                 @endforeach
 
             </div>
 
@@ -162,30 +159,22 @@
                     @enderror
                 </div>
 
-                <div class="col-md-3 nb-3 pt-3">
+                <div class="col-md-6 nb-3 pt-3">
                     <label for="">Etat</label>
                        <select name="etat" class="form-select" >
                         <option value="{{ $diplome->etat }}">{{ $diplome->etat }}</option>
                         <option value="Livré">Livré</option>
-                        <option value="non-livré">Non-livré</option>
+                        <option value="Non-livré">Non-livré</option>
                         </selecT>
                     @error('etat')
                     <div class="error  text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
-               <div class="col-md-4 nb-3">
+               <div class="col-md-6 nb-3 pt-3">
                     <label for="">receveur </label>
                     <input value="{{ $diplome->Receveur }}" type="text" name= 'receveur' class="form-control">
                     @error('receveur')
-                    <div class="error  text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-4 nb-2">
-                    <label for="sexe">Date Livraison</label>
-                    <input value="{{ $diplome->DateLivraison }}" type="date" name= 'DateLivraison' class="form-control">
-                    @error('DateEmission')
                     <div class="error  text-danger">{{ $message }}</div>
                     @enderror
                 </div>

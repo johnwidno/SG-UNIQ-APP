@@ -100,7 +100,7 @@
 
                 <h6>type</h6>
                 @foreach ($etudiant->diplomes as $diplome)
-                <p>{{ $diplome->categorie }}</p>
+                <p>{{ $diplome->categorie->nomCategorie}}</p>
                 @endforeach
             </div>
             <div class="col-md-2 nb-3">
@@ -125,6 +125,7 @@
 
                           <th>fichier (pdf)</th>
                           <th>type</th>
+                          <th>Option</th>
                           <th>No-Uniq</th>
                           <th>Code-MNFP</th>
                           <th>Livré par</th>
@@ -140,22 +141,22 @@
                       @foreach ($etudiant->diplomes as $diplome)
                       <tr>
                           <td> <a target="_new" href="{{ url('/uploads/diplome/'.$diplome->cheminVerfichier.'') }}">{{ $diplome->cheminVerfichier }}</a></td>
-                          <td>{{ $diplome->categorie }}</td>
+                          <td>{{ $diplome->categorie->nomCategorie }}</td>
+                          <td>{{ $diplome->programme->option }}</td>
                           <td>{{ $diplome->NumeroEnrUniq }}</td>
                           <td>{{ $diplome->CodeMNFP }}</td>
-                          <td>{{ $diplome->user->name }}</td>
+                          <td>{{ $diplome->user->nom }} {{ $diplome->user->prenom }}</td>
                           <td>{{ $diplome->Receveur}}</td>
                           <td>{{ $diplome->DateEmission }}</td>
                            <td>{{ $diplome->created_at }}</td>
                            <td>{{ $diplome->DateLivraison }}</td>
-                           <td>{{ $diplome->programme->nomProgramme }}</td>
-                           <td>
-                            <a  class="btn"  data-bs-toggle="modal" data-bs-target="#makeaslivre"> {{ $diplome->etat }}</a>
-                            <button class="btn  bg-danger " wire:click="Makeaslivre('{{ $diplome->id}}')" data-code="{{ $diplome->id}}" data-bs-toggle="modal" data-bs-target="#makeaslivre">
 
-
-
-
+                            <td>
+                                @if ($diplome->etat === 'Livré')
+                              {{ $diplome->etat }}
+                             @else
+                             <a href="{{ url('admin/diplome/recherche/livre/'.$diplome->id)}}">{{ $diplome->etat }} </a>
+                            @endif
                             </td>
 
                       </tr>
@@ -167,6 +168,7 @@
 
                <div class="col-md-12 nb-3">
                 <br>
+
                 <a href="{{ url('admin/diplome/remise/search/?search='.$etudiant->codeEtudiant.'') }}" class="float-end">attribuer un diplome ou cerrtificat</a>
         </div>
 

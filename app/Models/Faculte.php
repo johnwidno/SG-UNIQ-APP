@@ -18,8 +18,14 @@ class Faculte extends Model
 
 
 
+/*
 public function Programmes(){
     $this->hasMany(Programme::class,'codeFaculte');
+}*/
+
+public function programmes()
+{
+    return $this->hasMany(Programme::class, 'codeFaculte', 'codeFaculte');
 }
 
 public function etudiants()
@@ -27,5 +33,11 @@ public function etudiants()
     return $this->belongsToMany(Etudiant::class, 'etudiant_faculte', 'codeFaculte', 'codeEtudiant');
 }
 
+
+
+public function getEtudiantsCountAttribute()
+{
+    return $this->etudiants()->count();
+}
 
 }

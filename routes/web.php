@@ -75,9 +75,16 @@ Route::controller(App\Http\Controllers\Admin\DiplomeController::class)->group(fu
     Route::get('/diplome/{diplome}', 'updateremise');
     Route::get('/diplome/remise/search', 'rechercheUnEtudiant');
     Route::get('/diplome/recherche/search', 'EtudiantWithallinfos');
-    Route::get('/diplome/recherche/livre/search', 'EtudiantWithallinfos');
-    Route::get('/diplome/remise/livre', 'etudiantfaculte');
+    Route::get('/diplome/recherche/livre/{diplome}', 'Makeaslivrepage');
+    Route::get('/diplome/recherche/livre/{diplome}/change', 'Makeaslivre');
     Route::get('/diplome/fullscreen', 'voirall');
+    Route::get('/diplome/etudiants_par_programme/liste', 'etudiantsParProgramme');
+    Route::get('/diplome/etudiants_par_faculte/liste', 'etudiantsParFaculte');
+    Route::get('/diplome/etudiants_par_faculte/liste/{faculte}', 'etudiantsParFacultedsashbord');
+    Route::get('/diplome/etudiants_par_datelivraison/liste', 'etudiantspadateLivraison');
+    Route::get('/dashbord/etat/', 'diplomeetat');
+
+
 
    //Route::put('/diplome/{diplome}/delete', 'deletRemise');
    // Route::put('/diplome/{diplome}/select', 'selectall');
@@ -96,6 +103,17 @@ Route::controller(App\Http\Controllers\Admin\CategorieController::class)->group(
     Route::get('/categorie/{categorie}/delete', 'destroycategorie');
 
 });
+
+Route::controller(App\Http\Controllers\Admin\UtlisateurController::class)->group(function () {
+    Route::get('/utilisateur', 'index');
+    Route::get('/utilisateur/add', 'nouveautilisateur');
+    Route::post('/utilisateur/add/nouveau', 'insererutiliasteur');
+    Route::get('/utilisateur/{utilisateur}', 'changelerolepage');
+    Route::get('/utilisateur/edit/{utilisateur}', 'editer');
+    Route::put('/utilisateur/edit/update/{utilisateur}', 'update');
+    Route::get('/utilisateur/change/{utilisateur}/change', 'changelerolefonction');
+
+  });
 
 
 

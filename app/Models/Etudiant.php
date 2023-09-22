@@ -34,6 +34,21 @@ class Etudiant extends Model
        return $this->belongsToMany(Programme::class, 'etudiant__programme', 'codeEtudiant', 'codeProgramme')->withPivot('regime');
    }
 
+   // Student.php (assuming this is your Student model)
+public function programme()
+{
+    return $this->belongsTo(Programme::class, 'codeProgramme'); // Assuming 'programme_id' is the foreign key in the students table
+}/*
+public function diplome()
+{
+    return $this->belongsTo(Diplome::class, 'codeEtudiant'); // Assuming 'programme_id' is the foreign key in the students table
+}*/
+
+public function diplome()
+{
+    return $this->hasOne(Diplome::class, 'codeEtudiant', 'codeEtudiant');
+}
+
 
 
 }

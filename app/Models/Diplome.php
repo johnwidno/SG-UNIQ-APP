@@ -31,7 +31,7 @@ class Diplome extends Model
     }
 
     public function etudiant(){
-        return $this->belongsTo(Etudiant::class);
+        return $this->belongsTo(Etudiant::class,'codeEtudiant');
     }
 
 

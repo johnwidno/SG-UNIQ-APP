@@ -1,0 +1,29 @@
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #tableId, #tableId * {
+    visibility: visible;
+  }
+  #tableId {
+    position: absolute;
+    margin-top: 1em;
+    left: 0;
+
+  }
+
+
+
+
+    #titrelibele {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+}
+
+
+

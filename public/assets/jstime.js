@@ -48,5 +48,24 @@ document.getElementById('fichier').addEventListener('change', function () {
 });
 
 
+function printTable() {
+
+    const table = document.getElementById('tableId');
+    const titrelibele = document.getElementById('titrelibele');
+
+    if (table) {
+      // Afficher uniquement la table lors de l'impression
+
+      table.style.visibility = 'visible';
+      titrelibele.style.visibility = 'visible';
+
+      window.print();
+    }
+  }
+
+
+
+
+
 
 

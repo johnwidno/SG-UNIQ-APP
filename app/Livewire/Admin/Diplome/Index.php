@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Diplome;
 use App\Models\Diplome;
 use App\Models\Etudiant;
 use App\Models\Etudiant_Programme;
+use App\Models\EtudiantFaculte;
 use App\Models\Faculte;
 use App\Models\Programme;
 use Illuminate\Support\Facades\File;
@@ -20,11 +21,11 @@ class Index extends Component
     public function render()
     {
 
-    $etudiants = Etudiant::with('diplomes','programmes')->orderBy('codeEtudiant','ASC')->paginate(7);
-    $facultes= Faculte::all('*');
+   $facultes= Faculte::all('*');
     $programmes= Programme::all('*');
+    $diplomes= Diplome::with('etudiant')->orderBy('codeEtudiant','ASC')->paginate(7);
 
-      return view('livewire.admin.diplome.index',compact('etudiants','facultes','programmes'));
+      return view('livewire.admin.diplome.index',compact('facultes','programmes','diplomes'));
     }
 
     public $iddiplome;
@@ -40,7 +41,11 @@ class Index extends Component
         $diplome = Diplome::where('id', $this->iddiplome)->first();
         $etudiant_Programme = Etudiant_Programme::where('codeProgramme', $diplome->codeProgramme )->first();
 
-         $path='uploads/diplome/'.$diplome->cheminVerfichier;
+        $etudiantfaculte = EtudiantFaculte::where('codeEtudiant', $diplome->codeEtudiant)
+        ->where('codeFaculte', $diplome->Programme->codeFaculte)
+        ->first();
+
+        $path='uploads/diplome/'.$diplome->cheminVerfichier;
 
 
             try {
@@ -52,7 +57,7 @@ class Index extends Component
 
                         $diplome->delete();
                         $etudiant_Programme->delete();
-
+                     
                         File::delete($path);
                         return  redirect('admin/diplome')->with('message',"remise suprimé.");
                     }else{

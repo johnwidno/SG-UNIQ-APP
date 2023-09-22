@@ -30,10 +30,14 @@ public function faculte()
     }
 
 
+
     public function diplome()
     {
-        return $this->belongsTo(Programme::class,'codePrograme');
+        return $this->belongsTo(Diplome::class,'codePrograme');
     }
+   
+    
 
+    
 
 }

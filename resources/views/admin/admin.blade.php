@@ -23,6 +23,8 @@
     <link rel="shortcut icon" href="{{ asset('adminboostrap/images/favicon.png') }}">
 
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/monstyle.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
     @livewireStyles
@@ -87,7 +89,7 @@
     <!-- End custom js for this page-->
     <script src="{{ asset('js/jquery.cookie.js') }}" type="text/javascript"></script>
 
-
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 
 
     <script src="{{ asset('assets/js/jquery-3.7.0.js') }}"></script>

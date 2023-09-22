@@ -32,12 +32,6 @@ class EtudiantController extends Controller
    }
 
 
-
-
-
-
-
-
 public function insertEtudiant(EtudiantFormRequest $request)
 {
 
@@ -50,20 +44,20 @@ public function insertEtudiant(EtudiantFormRequest $request)
     $etudiant->prenom = $request->input('prenom');
     $etudiant->sexe = $request->input('sexe');
 
+    $faculte = Faculte::find($request->input('faculte'));
+    $programeOption = Programme::find($request->input('option'));
 
-     $faculte = Faculte::find($request->input('faculte'));
-     $programeOption = Programme::find($request->input('option'));
+    $Prog = Programme::where('codeProgramme','=',''. $programeOption->codeProgramme.'')->first();
 
-     $Prog = Programme::where('codeProgramme','=',''. $programeOption->codeProgramme.'')->first();
      if($Prog){
         if($Prog->codeFaculte != $request->input('faculte') ){
 
-            return  back()->with('messagenotrouve',"option et programme ne marche pas.");
+            return  back()->with('messagenotrouve',"L'Option choisi ne corespond pas au faculté.");
         }else{
             $etudiant->save();
             // Attach the Faculte to the Etudiant in the pivot table
-            $etudiant->facultes()->attach($faculte->codeFaculte);
-          // $etudiant->Programmes()->attach($programeOption ->codeProgramme);
+            //$etudiant->facultes()->attach($faculte->codeFaculte);
+            // $etudiant->Programmes()->attach($programeOption ->codeProgramme);
 
            $etudiantProgramme->codeEtudiant= $request->input('code');
            $etudiantProgramme->codeProgramme=$programeOption ->codeProgramme;
@@ -88,13 +82,12 @@ public function insertEtudiant(EtudiantFormRequest $request)
 
 }
 
-
-
-
-
-
 public function editer(Etudiant $etudiant){
-    return view('admin.etudiant.EditerEtudiant',compact('etudiant'));
+    $programmes=Programme::all('*');
+    $facultes=Faculte::all('*');
+
+
+    return view('admin.etudiant.EditerEtudiant',compact('etudiant','programmes','facultes'));
 
 
 
@@ -122,29 +115,54 @@ public function rechercheUnEtudiant(Request $request){
 public function UpdateEtudiant( EtudiantFormRequest $request ,$codeEtudiant)
 {
 
-    $etudiant = Etudiant::find($codeEtudiant);
-    $etudiantfaculte = EtudiantFaculte::where('codeEtudiant','=',''.$codeEtudiant.'')->first();
+    try{
+        $etudiant = Etudiant::find($codeEtudiant);
+        if($etudiant ){
 
-    if ($etudiant) {
-        $etudiant->nom = $request->input('nom');
-        $etudiant->prenom = $request->input('prenom');
-        $etudiant->sexe = $request->input('sexe');
-        $etudiantfaculte->codeEtudiant=request()->input('code');
-        $etudiantfaculte->codeFaculte=request()->input('faculte');
+            //$etudiant->codeEtudiant=$request->input('codeEtudiant');
+            $etudiant->nom=$request->input('nom');
+            $etudiant->prenom=$request->input('prenom');
+            $etudiant->sexe=$request->input('sexe');
 
-        $etudiant->save();
-        $etudiantfaculte->save();
-        return  redirect('admin/etudiant')->with('message',"Etudiant updated successfully.");
-    } else {
-        return  redirect('admin/etudiant')->with('message',"Etudiant non trouvé.");
+            $programme = Programme::find($request->input('option'));
+            $faculte = Faculte::find($request->input('faculte'));
+            $progdife=$programme::where('codeProgramme', $programme->codeProgramme)->first();
+
+            if($progdife){
+                if($programme->codeFaculte!=$faculte->codeFaculte){
+                    return  back()->with('messagenotrouve',"L'option choisi ne corespond pas au faculté.");
+                    }else{
+                        $etudiant->save();
+                        $etudiant->Programmes()->sync($request->input('codeEtudiant'));
+                        $etudiant->Programmes()->sync($request->input('option'));
+                        $etudiant->Programmes()->sync([$progdife->codeProgramme => ['regime' => $request->input('regime')]]);
+
+
+                        return  redirect('admin/etudiant')->with('message',"Modification effectué avec  succès.");
+
+ }
+
+            }else{
+
+                return 'option non trouvable';
+             }}
+             else{
+                return 'etudian introuvable';
+             }
+
+
+
+    } catch (QueryException $exception) {
+
+
+
+       return redirect('admin/etudiant/nouveauEtudiant')->with(['messagenotrouve' => 'Desolé!!!,Cet etudiant existe déja'.$exception->getMessage()] );
+
+
+
     }
 
 }
-
-
-
-
-
 
 
 

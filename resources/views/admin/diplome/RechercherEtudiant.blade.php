@@ -29,7 +29,7 @@
 </div>
 
 
-<div class="modal fade" id="makeaslivre" tabindex="-1"  wire:ignore.self  aria-labelledby="makeaslivremodelLabel" aria-hidden="true">
+<div class="modal fade" id="makeaslivre1" tabindex="-1"  wire:ignore.self  aria-labelledby="makeaslivremodelLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -37,13 +37,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
-          <form action="{{ url('admin/diplome/recherche/livre/search') }}" method="GET">
+          <form action="{{ url('admin/diplome/recherche/livre/search') }}" method="Post">
             <span class="input-group-text" id="search">
 
-                 <select name="" id="" class="form-select">livre
-                    <option value="">livre</option>
-                    <option value="">nomlivre</option>
-                    <option value="">livre</option>
+                 <select name="etat" id="" class="form-select">livre
+                    <option value="Livré">Livré</option>
+                    <option value="Non-livré">Non-livré</option>
 
                  </select>
                </span>
