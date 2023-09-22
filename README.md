@@ -20,13 +20,12 @@ Ce projet permet la gestion de la remise des diplomes des etudiants de l'uniq.
 ## Quelques fonctionnalités
 
 Dans cette partie L'utilisateur peut:
-- enregistrer une categorie de diplome(liscence, diplo ect..) puis effectuer des mis a jour (etition, supp).
-- enregistrer une faculte puis effectuer des mis a jour (etition,Suppression).
-- enregistrer une programme puis effectuer des mis a jour (etition,Suppression).
+- Enregistrer une categorie de diplome(liscence, diplo ect..) puis effectuer des mis a jour (etition, supp).
+- Enregistrer une faculte puis effectuer des mis a jour (etition,Suppression).
+- Enregistrer une programme puis effectuer des mis a jour (etition,Suppression).
 - Effectuer une remise de diplome  effectuer des mis a jour (etition,Suppression ect..).
-- voir en resume les quantite de diplomes remis par faculte, programe ect..
+- Voir en resume les quantite de diplomes remis par faculte, programe ect..
 - Afficher toutes les informations concernant les diplomes en plein ecran.
-- 
 
 ## Nouvelles fonctionalités
 - Aficher la liste des etudiants par faculté.
@@ -34,7 +33,7 @@ Dans cette partie L'utilisateur peut:
 - Aficher la liste des utudiants par date de livraison.
 - Efectuer un impression ou creer une liste en format pdf.
 - Ajouter de nouvelles utilisateurs et atribution de roles.
-- editer , modifier ou suprimer un utlkisateurs
+- Editer, modifier ou supprimer un utilisateurs
 
 ## Presentation 2
 
